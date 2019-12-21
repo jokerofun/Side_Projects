@@ -1,0 +1,37 @@
+.tablebg {
+    width: 65%;
+    border: 1px solid black;
+    background-color: gray;
+}
+
+.messagesbg {
+    width: 100%;
+}
+
+.chatheader {
+    width: 100%;
+    border-bottom: 1px solid black;
+}
+
+.onlinelist {
+    width: 10%;
+    border: 1px solid black;
+}
+
+.inputbox {
+    width: 90%;
+}
+
+.formbox {
+    width: 100%;
+    min-width: 150px;
+    max-width: 500px;
+}
+
+.row1 {
+    border-bottom: 1px solid black;
+}
+
+.col1 {
+    border: 1px solid black;
+}

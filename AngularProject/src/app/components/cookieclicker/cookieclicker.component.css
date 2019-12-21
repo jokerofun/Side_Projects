@@ -1,0 +1,31 @@
+.content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .content1 {
+    display: grid;
+    /* grid-template-columns: 2fr 1fr; */
+  }
+  
+  .score {
+    margin-top: .5em;
+    margin-left: 2em;
+    font-size: 1.5em
+  }
+  
+  .fas {
+    cursor: pointer;
+    font-size: 3em;
+  }
+
+  .fa-cookie {
+    cursor: pointer;
+    font-size: 10em;
+    margin: 5%;
+  }
+
+  /* .fa-mouse-pointer {
+    border: 1px solid black;
+  } */
+  

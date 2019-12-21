@@ -1,0 +1,49 @@
+<div class="content">
+
+  <mat-card>
+    <mat-card-content>
+      <div class="content1">
+        <button mat-fab color="primary" class="score">
+          {{cookies}}
+        </button>
+      </div>
+
+      <div class="content2">
+        <i (click)="increment()" class="fas fa-cookie"></i>
+      </div>
+      <button mat-raised-button color="primary" (click)="load()">Load</button>
+      <button mat-raised-button color="primary" (click)="save()">Save</button>
+      <button mat-raised-button color="primary" (click)="reset()">Reset</button>
+
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-content>
+      <h2>Upgrades</h2>
+      <div class="content1">
+        <i (click)="buyGrandma()" class="fas fa-female">Buy Grandma Total:{{grandmas}} Cost:{{grandmasCost}}</i>
+      </div>
+      <div class="content1">
+        <i (click)="buyFactory()" class="fas fa-industry">Buy Factory Total:{{factories}} Cost:{{factoriesCost}}</i>
+      </div>
+      <div class="content1">
+        <i (click)="buyShipment()" class="fas fa-ship">Buy Shipment Total:{{shipments}} Cost:{{shipmentsCost}}</i>
+      </div>
+      <div class="content1">
+        <i (click)="buyWizard()" class="fas fa-hat-wizard">Buy Wizard Total:{{wizards}} Cost:{{wizardsCost}}</i>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-content>
+      <h2>Upgrades 2</h2>
+      <i *ngIf="cursorUpgrades === 0" (click)="buyCursor()" class="fas fa-mouse-pointer" title="Cost: 500 Description: Bake 2 more cookies per click"></i>
+    </mat-card-content>
+  </mat-card>
+
+  </div>
+
+  <p>Inspired from Cookie Clicker by Orteil - Dashnet (https://orteil.dashnet.org/cookieclicker/)</p>
