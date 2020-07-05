@@ -1,0 +1,14 @@
+<form (ngSubmit)="login()" [formGroup]="loginForm" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
+  <mat-form-field>
+    <input formControlName="email" matInput type="email" placeholder="Enter email...">
+    <mat-error *ngIf="loginForm.get('email').hasError('required')">Email is required!</mat-error>
+    <mat-error *ngIf="loginForm.get('email').hasError('pattern')">Email must be valid!</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input formControlName="password" matInput type="password" placeholder="Enter password...">
+    <mat-error *ngIf="loginForm.get('password').hasError('required')">Password is required!</mat-error>
+    <mat-error *ngIf="loginForm.get('password').hasError('minlength')">Password must be 6 or more characters!
+    </mat-error>
+  </mat-form-field>
+  <button [disabled]="loginForm.invalid" mat-raised-button type="submit" color="primary">Login</button>
+</form>

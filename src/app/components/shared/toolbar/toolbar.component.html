@@ -1,0 +1,25 @@
+<mat-toolbar color="primary">
+  <div fxHide.gt-xs>
+    <button mat-icon-button (click)="toggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <button mat-icon-button routerLink="/home">
+      <mat-icon>home</mat-icon>
+  </button>
+  <ul fxFlex fxLayout fxLayoutAlign="flex-end" fxLayoutGap="20px" fxHide.xs class="navigation-links">
+    <button *ngIf="isAuth && isAdmin" mat-icon-button routerLink="/admintools">
+      <mat-icon>settings</mat-icon>
+    </button>
+    <div *ngIf="isAuth">Hello, {{username}}</div>
+      <button *ngIf="!isAuth" mat-icon-button routerLink="/register">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <button *ngIf="!isAuth" mat-icon-button routerLink="/login">
+        <mat-icon>exit_to_app</mat-icon>
+      </button>
+      <button *ngIf="isAuth" mat-icon-button (click)="logout()" routerLink="/logout">
+        <mat-icon>power_settings_new</mat-icon>
+      </button>
+  </ul>
+</mat-toolbar>
