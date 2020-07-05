@@ -1,9 +1,0 @@
-/* Sidenav CSS */
-  
-  mat-sidenav {
-    width: 150px;
-  }
-
-  mat-sidenav-container {
-    display: inline;
-  }
