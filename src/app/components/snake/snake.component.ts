@@ -4,7 +4,10 @@ import { CONTROLS, COLORS, BOARD_SIZE, GAME_MODES } from './constants';
 @Component({
   selector: 'app-snake',
   templateUrl: './snake.component.html',
-  styleUrls: ['./snake.component.css']
+  styleUrls: ['./snake.component.css'],
+  host: {
+    '(document:keydown)': 'handleKeyboardEvents($event)'
+  }
 })
 export class SnakeComponent {
   private interval: number;
@@ -15,6 +18,7 @@ export class SnakeComponent {
   public all_modes = GAME_MODES;
   public getKeys = Object.keys;
   public board = [];
+  public obstacles = [];
   public score = 0;
   public showMenuChecker = false;
   public gameStarted = false;
@@ -35,7 +39,9 @@ export class SnakeComponent {
     y: -1
   };
 
-  constructor() { }
+  constructor() { 
+    this.setBoard();
+  }
 
   handleKeyboardEvents(e: KeyboardEvent) {
     if (e.keyCode === CONTROLS.LEFT && this.snake.direction !== CONTROLS.RIGHT) {
