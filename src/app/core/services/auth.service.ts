@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 import { PresenceService } from './presence.service';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -78,7 +78,7 @@ export class AuthService {
 
   loginUser(email: string, password: string) {
     
-    this.afAuth.auth.signInWithEmailAndPassword(email, password)
+    this.afAuth.signInWithEmailAndPassword(email, password)
       .then((userData) => {
         this.router.navigate(['/home']);
         this.username = email.substring(0, email.lastIndexOf("@"));
@@ -97,7 +97,7 @@ export class AuthService {
   }
 
   registerUser(email: string, password: string) {
-    this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+    this.afAuth.createUserWithEmailAndPassword(email, password)
       .then(() => {
         this.router.navigate(['/home']);
         this.username = email.substring(0, email.lastIndexOf("@"));
@@ -118,7 +118,7 @@ export class AuthService {
 
   logout() {
     // this.presence.setPresence('offline');
-    this.afAuth.auth.signOut();
+    this.afAuth.signOut();
     localStorage.clear();
     this.username = '';
     this.router.navigate(['/login']);

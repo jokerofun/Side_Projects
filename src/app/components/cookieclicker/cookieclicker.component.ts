@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieclickerService } from 'src/app/core/services/cookieclicker.service';
 import { Subscription } from 'rxjs';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-cookieclicker',
