@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SnakeService } from 'src/app/core/services/snake.service';
+import { Subscription } from 'rxjs';
 import { CONTROLS, COLORS, BOARD_SIZE, GAME_MODES } from './constants';
 
 @Component({
@@ -10,6 +12,8 @@ import { CONTROLS, COLORS, BOARD_SIZE, GAME_MODES } from './constants';
   }
 })
 export class SnakeComponent {
+  private retrieveBestScoreSub = new Subscription();
+
   private interval: number;
   private tempDirection: number;
   private default_mode = 'classic';
@@ -23,6 +27,7 @@ export class SnakeComponent {
   public showMenuChecker = false;
   public gameStarted = false;
   public newBestScore = false;
+  public best_score = 0;
 
   private snake = {
     direction: CONTROLS.LEFT,
@@ -39,7 +44,13 @@ export class SnakeComponent {
     y: -1
   };
 
-  constructor() { 
+  constructor(
+    private snakeService: SnakeService
+  ) { 
+    this.retrieveBestScoreSub = this.snakeService.retrieve().subscribe((data: any) => {
+      this.best_score = data.snake.best_score;
+      this.retrieveBestScoreSub.unsubscribe();
+    })
     this.setBoard();
   }
 
@@ -64,6 +75,8 @@ export class SnakeComponent {
       return COLORS.HEAD;
     } else if (this.board[col][row] === true) {
       return COLORS.BODY;
+    } else if (this.default_mode === 'obstacles' && this.checkObstacles(row, col)){
+      return COLORS.OBSTACLE;
     }
 
     return COLORS.BOARD;
@@ -75,6 +88,13 @@ export class SnakeComponent {
 
     if (this.default_mode === 'classic' && this.boardCollision(newHead)) {
       return this.gameOver();
+    }else if(this.default_mode === 'no_walls'){
+      this.noWallsTransition(newHead);
+    }else if(this.default_mode === 'obstacles'){
+      this.noWallsTransition(newHead);
+      if(this.obstacleCollision(newHead)){
+        return this.gameOver();
+      }
     }
 
     if (this.selfCollision(newHead)) {
@@ -110,6 +130,49 @@ export class SnakeComponent {
     }
 
     return newHead;
+  }
+
+  noWallsTransition(part: any): void {
+    if(part.x === BOARD_SIZE){
+      part.x = 0;
+    }else if(part.x === -1){
+      part.x = BOARD_SIZE - 1;
+    }
+
+    if(part.y === BOARD_SIZE){
+      part.y = 0;
+    }else if(part.y === -1){
+      part.y = BOARD_SIZE - 1;
+    }
+  }
+
+  addObstacles(): void {
+    let x = this.randomNumber();
+    let y = this.randomNumber();
+
+    if(this.board[y][x] === true || y === 8) {
+      return this.addObstacles();
+    }
+
+    this.obstacles.push({
+      x: x,
+      y: y
+    });
+  }
+
+  checkObstacles(x, y): boolean {
+    let res = false;
+
+    this.obstacles.forEach((val) => {
+      if(val.x === x && val.y === y){
+        res = true;
+      }
+    })
+    return res;
+  }
+
+  obstacleCollision(part: any): boolean {
+    return this.checkObstacles(part.x, part.y);
   }
 
   boardCollision(part: any): boolean {
@@ -156,11 +219,11 @@ export class SnakeComponent {
     this.gameStarted = false;
     let me = this;
 
-    // if(this.score > this.best_score){
-    //   this.bestScoreService.store(this.score);
-    //   this.best_score = this.score;
-    //   this.newBestScore = true;
-    // }
+    if(this.score > this.best_score){
+      this.best_score = this.score;
+      this.newBestScore = true;
+      this.snakeService.store({ best_score: this.best_score});
+    }
 
     setTimeout(() => {
       me.isGameOver = false;
@@ -204,6 +267,14 @@ export class SnakeComponent {
 
     for (let i = 0; i < 3; i++) {
       this.snake.parts.push({ x: 8 + i, y: 8 });
+    }
+
+    if(mode === 'obstacles') {
+      this.obstacles = [];
+      let j = 0;
+      do {
+        this.addObstacles();
+      } while (j++ < 9);
     }
 
     this.resetFruit();
