@@ -5,15 +5,17 @@ import { AngularFirestore } from '@angular/fire/firestore';
   providedIn: 'root'
 })
 export class SnakeService {
-  username = localStorage.getItem('username');
+  username = '';
 
   constructor(private db: AngularFirestore) { }
 
   store(payload){
+    this.username = localStorage.getItem('username');
     this.db.collection('users').doc(this.username).update({'snake': payload})
   }
 
   retrieve(){
+    this.username = localStorage.getItem('username');
     return this.db.collection('users').doc(this.username).valueChanges();
   }
 

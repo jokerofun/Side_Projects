@@ -46,12 +46,16 @@ export class SnakeComponent {
 
   constructor(
     private snakeService: SnakeService
-  ) { 
+  ) {
+    this.setBoard();
+    this.retrieveBestScore;
+  }
+
+  retrieveBestScore(): void {
     this.retrieveBestScoreSub = this.snakeService.retrieve().subscribe((data: any) => {
       this.best_score = data.snake.best_score;
       this.retrieveBestScoreSub.unsubscribe();
     })
-    this.setBoard();
   }
 
   handleKeyboardEvents(e: KeyboardEvent) {
