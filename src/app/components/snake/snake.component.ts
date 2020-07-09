@@ -48,7 +48,7 @@ export class SnakeComponent {
     private snakeService: SnakeService
   ) {
     this.setBoard();
-    this.retrieveBestScore;
+    this.retrieveBestScore();
   }
 
   retrieveBestScore(): void {
