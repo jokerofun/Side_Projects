@@ -52,10 +52,12 @@ export class SnakeComponent {
   }
 
   retrieveBestScore(): void {
-    this.retrieveBestScoreSub = this.snakeService.retrieve().subscribe((data: any) => {
-      this.best_score = data.snake.best_score;
-      this.retrieveBestScoreSub.unsubscribe();
-    })
+    if ('username' in localStorage) {
+      this.retrieveBestScoreSub = this.snakeService.retrieve().subscribe((data: any) => {
+        this.best_score = data.snake.best_score;
+        this.retrieveBestScoreSub.unsubscribe();
+      })
+    }
   }
 
   handleKeyboardEvents(e: KeyboardEvent) {
@@ -79,7 +81,7 @@ export class SnakeComponent {
       return COLORS.HEAD;
     } else if (this.board[col][row] === true) {
       return COLORS.BODY;
-    } else if (this.default_mode === 'obstacles' && this.checkObstacles(row, col)){
+    } else if (this.default_mode === 'obstacles' && this.checkObstacles(row, col)) {
       return COLORS.OBSTACLE;
     }
 
@@ -92,11 +94,11 @@ export class SnakeComponent {
 
     if (this.default_mode === 'classic' && this.boardCollision(newHead)) {
       return this.gameOver();
-    }else if(this.default_mode === 'no_walls'){
+    } else if (this.default_mode === 'no_walls') {
       this.noWallsTransition(newHead);
-    }else if(this.default_mode === 'obstacles'){
+    } else if (this.default_mode === 'obstacles') {
       this.noWallsTransition(newHead);
-      if(this.obstacleCollision(newHead)){
+      if (this.obstacleCollision(newHead)) {
         return this.gameOver();
       }
     }
@@ -137,15 +139,15 @@ export class SnakeComponent {
   }
 
   noWallsTransition(part: any): void {
-    if(part.x === BOARD_SIZE){
+    if (part.x === BOARD_SIZE) {
       part.x = 0;
-    }else if(part.x === -1){
+    } else if (part.x === -1) {
       part.x = BOARD_SIZE - 1;
     }
 
-    if(part.y === BOARD_SIZE){
+    if (part.y === BOARD_SIZE) {
       part.y = 0;
-    }else if(part.y === -1){
+    } else if (part.y === -1) {
       part.y = BOARD_SIZE - 1;
     }
   }
@@ -154,7 +156,7 @@ export class SnakeComponent {
     let x = this.randomNumber();
     let y = this.randomNumber();
 
-    if(this.board[y][x] === true || y === 8) {
+    if (this.board[y][x] === true || y === 8) {
       return this.addObstacles();
     }
 
@@ -168,7 +170,7 @@ export class SnakeComponent {
     let res = false;
 
     this.obstacles.forEach((val) => {
-      if(val.x === x && val.y === y){
+      if (val.x === x && val.y === y) {
         res = true;
       }
     })
@@ -223,10 +225,12 @@ export class SnakeComponent {
     this.gameStarted = false;
     let me = this;
 
-    if(this.score > this.best_score){
+    if (this.score > this.best_score) {
       this.best_score = this.score;
       this.newBestScore = true;
-      this.snakeService.store({ best_score: this.best_score});
+      if ('username' in localStorage) {
+        this.snakeService.store({ best_score: this.best_score });
+      }
     }
 
     setTimeout(() => {
@@ -273,7 +277,7 @@ export class SnakeComponent {
       this.snake.parts.push({ x: 8 + i, y: 8 });
     }
 
-    if(mode === 'obstacles') {
+    if (mode === 'obstacles') {
       this.obstacles = [];
       let j = 0;
       do {
