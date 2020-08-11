@@ -72,6 +72,18 @@ export class SnakeComponent {
     }
   }
 
+  handleButtonEvents(num: number) {
+    if (num === CONTROLS.LEFT && this.snake.direction !== CONTROLS.RIGHT) {
+      this.tempDirection = CONTROLS.LEFT;
+    } else if (num === CONTROLS.UP && this.snake.direction !== CONTROLS.DOWN) {
+      this.tempDirection = CONTROLS.UP;
+    } else if (num === CONTROLS.RIGHT && this.snake.direction !== CONTROLS.LEFT) {
+      this.tempDirection = CONTROLS.RIGHT;
+    } else if (num === CONTROLS.DOWN && this.snake.direction !== CONTROLS.UP) {
+      this.tempDirection = CONTROLS.DOWN;
+    }
+  }
+
   setColors(col: number, row: number): string {
     if (this.isGameOver) {
       return COLORS.GAME_OVER;
