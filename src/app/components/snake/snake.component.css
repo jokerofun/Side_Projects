@@ -136,10 +136,10 @@
 }
 
 .arrow {
-  border: solid black;
+  border: solid rgba(66, 39, 39, 0.2);
   border-width: 0 3px 3px 0;
   display: inline-block;
-  padding: 3px;
+  padding: 8px;
 }
 
 .right {
