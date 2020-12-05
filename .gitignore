@@ -41,6 +41,9 @@ yarn-error.log
 testem.log
 /typings
 
+# Ignore files related to API keys
+.env
+
 # System Files
 .DS_Store
 Thumbs.db
