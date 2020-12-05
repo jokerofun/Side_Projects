@@ -43,6 +43,7 @@ testem.log
 
 # Ignore files related to API keys
 .env
+src/environments/environment.ts
 
 # System Files
 .DS_Store
