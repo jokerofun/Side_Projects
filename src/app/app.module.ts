@@ -21,7 +21,6 @@ import { AdmintoolsComponent } from './components/shared/admintools/admintools.c
 import { RockpaperscissorComponent } from './components/rockpaperscissor/rockpaperscissor.component';
 import { CookieclickerComponent } from './components/cookieclicker/cookieclicker.component';
 import { SnakeComponent } from './components/snake/snake.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -46,8 +45,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
-    AngularFirestoreModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    AngularFirestoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]
